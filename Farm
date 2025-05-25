@@ -1,0 +1,111 @@
+--[ MADE BY EZR ]--
+local TS = game:GetService("TweenService") 
+local TPS = game:GetService("TeleportService")
+local TP
+local Owner = "Ezrx667"
+local Prefix = ""
+local Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+queue_on_teleport(loadstring(game:HttpGet('https://gist.githubusercontent.com/Ezrxkrx/858b845c11ec21deae73e5cd19c62e7b/raw/MCY_Rework_AUTO_Farm.lua'))())
+function join()
+    local a,b = pcall(function()
+ 
+        local servers = {}
+        local req = request({Url = "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true"})
+        local body = game:GetService("HttpService"):JSONDecode(req.Body)
+    
+        if body and body.data then
+            for i, v in next, body.data do
+                if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= game.JobId then
+                    table.insert(servers, 1, v.id)
+                end
+            end
+        end
+    
+        print(#servers)
+        if #servers > 0 then
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], game.Players.LocalPlayer)
+        else
+            if #game.Players:GetChildren() <= 1 then
+                Players.LocalPlayer:Kick("\nRejoining...")
+                wait()
+                game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+            else
+                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
+            end
+        end
+    
+    end)
+    
+    print(a,b)
+ 
+    if not a then
+        join()
+    end 
+ 
+    task.spawn(function()
+        while wait(5) do
+            join()
+        end
+    end)
+end
+ 
+wait(1)
+ 
+game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").Died:Connect(function()
+    join()
+end)
+ 
+function TPL(x,y,z)
+    Game.Workspace.Pyramid.Tele.Core2.CanCollide = false
+    Game.Workspace.Pyramid.Tele.Core2.Transparency = 1
+    Game.Workspace.Pyramid.Tele.Core2.CFrame = Game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    task.wait()
+    Game.Workspace.Pyramid.Tele.Core2.CFrame = CFrame.new(1231.14185, 51051.2344, 318.096191)
+    Game.Workspace.Pyramid.Tele.Core2.Transparency = 0
+    Game.Workspace.Pyramid.Tele.Core2.CanCollide = true
+    task.wait()
+    for i = 1, 45 do
+        Game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(x,y,z)
+        task.wait()
+    end
+end
+ 
+function Launch()
+    for _, Object in ipairs(game.workspace.ObjectSelection:GetChildren()) do
+        if Object.Name == "ATM" then
+            if Object:FindFirstChild("ATM") then
+                TPL(Object.ATM.CFrame.X,Object.ATM.CFrame.Y,Object.ATM.CFrame.Z)
+                Object.ATM.ATM.Event:FireServer()
+            end
+        elseif Object.Name == "Laptop" or Object.Name == "Phone" then
+            if Object:FindFirstChild("Steal") then
+                TPL(Object.Steal.CFrame.X,Object.Steal.CFrame.Y,Object.Steal.CFrame.Z)
+                Object.Steal.Steal.Event:FireServer()
+            end
+        elseif Object.Name == "Cash" then
+            if Object:FindFirstChild("Cash") then
+               TPL(Object.Cash.CFrame.X,Object.Cash.CFrame.Y,Object.Cash.CFrame.Z)
+                Object.Cash.Cash.Event:FireServer()
+            end
+        elseif Object.Name == "TV" then
+            if Object:FindFirstChild("StealTV") then
+                TPL(Object.StealTV.CFrame.X,Object.StealTV.CFrame.Y,Object.StealTV.CFrame.Z)
+                Object.StealTV.StealTV.Event:FireServer()
+            end
+        elseif Object.Name == "Luggage" then
+             if Object:FindFirstChild("SmashCash") then
+                TPL(Object.SmashCash.CFrame.X,Object.SmashCash.CFrame.Y,Object.SmashCash.CFrame.Z)
+                Object.SmashCash.SmashCash.Event:FireServer()
+            end
+        elseif Object.Name == "DiamondBox" then
+            if Object:FindFirstChild("SmashCash") then
+                TPL(Object.SmashCash.CFrame.X,Object.SmashCash.CFrame.Y,Object.SmashCash.CFrame.Z)
+                Object.SmashCash.SmashCash.Event:FireServer()
+            end
+        end
+    end
+end
+ 
+Launch()
+wait(1)
+join()
