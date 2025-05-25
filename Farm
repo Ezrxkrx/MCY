@@ -5,7 +5,7 @@ local TP
 local Owner = "Ezrx667"
 local Prefix = ""
 local Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
-queue_on_teleport(loadstring(game:HttpGet('https://gist.githubusercontent.com/Ezrxkrx/858b845c11ec21deae73e5cd19c62e7b/raw/MCY_Rework_AUTO_Farm.lua'))())
+queue_on_teleport(loadstring(game:HttpGet('https://raw.githubusercontent.com/Ezrxkrx/MCY/refs/heads/main/Farm'))())
 function join()
     local a,b = pcall(function()
  
